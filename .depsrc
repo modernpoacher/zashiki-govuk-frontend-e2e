@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@modernpoacher/nunjucks": "latest",
-    "@modernpoacher/zashiki": "latest",
-    "@modernpoacher/zashiki-govuk-frontend": "latest"
-  }
-}
