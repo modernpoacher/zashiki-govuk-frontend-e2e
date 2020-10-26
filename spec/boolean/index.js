@@ -314,6 +314,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('true')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(1) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', 'false')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(1)', getTextContent)).to.equal('Boolean'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(1) + dl dt', getTextContent)).to.equal('Boolean')
+
+              expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('false')
+            })
+          })
         })
 
         describe('Boolean - Boolean (Enum)', () => {
@@ -353,6 +377,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
             expect(await page.$eval('body main h2:nth-of-type(5) + dl dt', getTextContent)).to.equal('Boolean') // (All Of)')
 
             expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('true')
+          })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(5) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', 'false')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(5)', getTextContent)).to.equal('Boolean (All Of)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(5) + dl dt', getTextContent)).to.equal('Boolean')
+
+              expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('false')
+            })
           })
         })
 

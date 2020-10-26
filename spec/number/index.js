@@ -316,6 +316,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('1')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(1) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', '2')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(1)', getTextContent)).to.equal('Number'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(1) + dl dt', getTextContent)).to.equal('Number')
+
+              expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('2')
+            })
+          })
         })
 
         describe('Number - Number (Enum)', () => {
@@ -355,6 +379,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
             expect(await page.$eval('body main h2:nth-of-type(5) + dl dt', getTextContent)).to.equal('Number') // (All Of)')
 
             expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('1')
+          })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(5) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', '2')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(5)', getTextContent)).to.equal('Number (All Of)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(5) + dl dt', getTextContent)).to.equal('Number')
+
+              expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('2')
+            })
           })
         })
 
