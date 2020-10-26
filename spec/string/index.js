@@ -34,7 +34,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
     before(async () => {
       page = await browser.newPage()
 
-      await page.goto('https://localhost:5001/embark-stage') // , { waitUntil: 'networkidle2' })
+      await page.goto('https://localhost:5001/embark-stage')
       await page.waitForSelector('h1')
     })
 
@@ -61,7 +61,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
     before(async () => {
       page = await browser.newPage()
 
-      await page.goto('https://localhost:5001/embark-stage') // , { waitUntil: 'networkidle2' })
+      await page.goto('https://localhost:5001/embark-stage')
 
       await page.evaluate(() => {
         const option = Array.from(document.querySelectorAll('body main fieldset select option'))
@@ -225,7 +225,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
       before(async () => {
         page = await browser.newPage()
 
-        await page.goto('https://localhost:5001/debark-stage') // , { waitUntil: 'networkidle2' })
+        await page.goto('https://localhost:5001/debark-stage')
         await page.waitForSelector('h1')
       })
 
@@ -300,7 +300,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
       before(async () => {
         page = await browser.newPage()
 
-        await page.goto('https://localhost:5001/confirm-stage') // , { waitUntil: 'networkidle2' })
+        await page.goto('https://localhost:5001/confirm-stage')
         await page.waitForSelector('h1')
       })
 

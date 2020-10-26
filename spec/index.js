@@ -34,7 +34,7 @@ describe('@modernpoacher/zashiki-govuk-frontend', () => {
     it('is awake', async () => {
       page = await browser.newPage()
 
-      await page.goto('https://localhost:5001') // , { waitUntil: 'networkidle2' })
+      await page.goto('https://localhost:5001')
       await page.waitForSelector('h1')
 
       return expect(await page.$eval('h1', getTextContent)).to.equal('Zashiki')
