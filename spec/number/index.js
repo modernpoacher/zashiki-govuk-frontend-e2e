@@ -358,7 +358,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
           })
         })
 
-        describe('Submitting', () => {
+        describe('Submit', () => {
           before(async () => {
             page.click('body main button.govuk-button')
 
