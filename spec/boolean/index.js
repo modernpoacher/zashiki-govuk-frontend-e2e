@@ -10,7 +10,7 @@ const log = debug('zashiki:e2e')
 
 log('`zashiki` is awake')
 
-const getTextContent = (element) => element.textContent.trim()
+const getTextContent = ({ textContent = '' }) => textContent.trim()
 
 describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
   before(() => {

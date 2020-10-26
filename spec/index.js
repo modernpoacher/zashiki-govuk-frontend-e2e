@@ -10,7 +10,7 @@ const log = debug('zashiki:e2e')
 
 log('`zashiki` is awake')
 
-const getTextContent = (element) => element.textContent.trim()
+const getTextContent = ({ textContent = '' }) => textContent.trim()
 
 describe('@modernpoacher/zashiki-govuk-frontend', () => {
   before(() => {
@@ -37,7 +37,7 @@ describe('@modernpoacher/zashiki-govuk-frontend', () => {
       await page.goto('https://localhost:5001')
       await page.waitForSelector('h1')
 
-      return expect(await page.$eval('h1', getTextContent)).to.equal('Zashiki')
+      expect(await page.$eval('h1', getTextContent)).to.equal('Zashiki')
     })
   })
 })
