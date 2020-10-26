@@ -276,6 +276,28 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('Two')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(2) + dl dd a')
+
+              await page.waitForNavigation()
+
+              await page.click('input[type="radio"][value="2"]')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(2)', getTextContent)).to.equal('String (Enum)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dt', getTextContent)).to.equal('String (Enum)')
+
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('Three')
+            })
+          })
         })
 
         describe('String - String (Any Of)', () => {
@@ -286,6 +308,28 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('Two')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(3) + dl dd a')
+
+              await page.waitForNavigation()
+
+              await page.click('input[type="radio"][value="2"]')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(3)', getTextContent)).to.equal('String (Any Of)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(3) + dl dt', getTextContent)).to.equal('String (Any Of)')
+
+              expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('Three')
+            })
+          })
         })
 
         describe('String - String (One Of)', () => {
@@ -295,6 +339,28 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
             expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('String (One Of)')
 
             expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('Two')
+          })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(4) + dl dd a')
+
+              await page.waitForNavigation()
+
+              await page.click('input[type="radio"][value="2"]')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(4)', getTextContent)).to.equal('String (One Of)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('String (One Of)')
+
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('Three')
+            })
           })
         })
 

@@ -350,6 +350,28 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('2')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(2) + dl dd a')
+
+              await page.waitForNavigation()
+
+              await page.select('body main fieldset.govuk-fieldset select.govuk-select', '2')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(2)', getTextContent)).to.equal('Number (Enum)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dt', getTextContent)).to.equal('Number (Enum)')
+
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('3')
+            })
+          })
         })
 
         describe('Number - Number (Any Of)', () => {
@@ -360,6 +382,28 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('Two')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(3) + dl dd a')
+
+              await page.waitForNavigation()
+
+              await page.select('body main fieldset.govuk-fieldset select.govuk-select', '2')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(3)', getTextContent)).to.equal('Number (Any Of)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(3) + dl dt', getTextContent)).to.equal('Number (Any Of)')
+
+              expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('Three')
+            })
+          })
         })
 
         describe('Number - Number (One Of)', () => {
@@ -369,6 +413,28 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
             expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('Number (One Of)')
 
             expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('Two')
+          })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(4) + dl dd a')
+
+              await page.waitForNavigation()
+
+              await page.select('body main fieldset.govuk-fieldset select.govuk-select', '2')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(4)', getTextContent)).to.equal('Number (One Of)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('Number (One Of)')
+
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('Three')
+            })
           })
         })
 

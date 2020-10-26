@@ -348,6 +348,28 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('null')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(2) + dl dd a')
+
+              await page.waitForNavigation()
+
+              await page.select('body main fieldset.govuk-fieldset select.govuk-select', '0')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(2)', getTextContent)).to.equal('Null (Enum)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dt', getTextContent)).to.equal('Null (Enum)')
+
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('null')
+            })
+          })
         })
 
         describe('Null - Null (Any Of)', () => {
@@ -358,6 +380,28 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('Null')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(3) + dl dd a')
+
+              await page.waitForNavigation()
+
+              await page.select('body main fieldset.govuk-fieldset select.govuk-select', '0')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(3)', getTextContent)).to.equal('Null (Any Of)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(3) + dl dt', getTextContent)).to.equal('Null (Any Of)')
+
+              expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('Null')
+            })
+          })
         })
 
         describe('Null - Null (One Of)', () => {
@@ -367,6 +411,28 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
             expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('Null (One Of)')
 
             expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('Null')
+          })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(4) + dl dd a')
+
+              await page.waitForNavigation()
+
+              await page.select('body main fieldset.govuk-fieldset select.govuk-select', '0')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(4)', getTextContent)).to.equal('Null (One Of)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('Null (One Of)')
+
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('Null')
+            })
           })
         })
 
