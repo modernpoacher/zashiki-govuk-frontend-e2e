@@ -77,11 +77,23 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
     describe('Null - Null', () => {
       before(async () => await page.goto('https://localhost:5001/null/null'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/null/null')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+
+        await page.type('input[type="text"]', 'null')
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Null'))
 
       it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('input[type="text"]', 'null')
           page.click('body main button.govuk-button')
@@ -96,7 +108,31 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
+        })
+      })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/null/null')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+
+          await page.type('input[type="text"]', 'string')
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/null/null'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
         })
       })
     })
@@ -112,7 +148,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
         return expect(nodeList).to.have.lengthOf.above(0)
       })
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.select('body main fieldset.govuk-fieldset select.govuk-select', '0')
           page.click('body main button.govuk-button')
@@ -143,7 +179,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
         return expect(nodeList).to.have.lengthOf.above(0)
       })
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.select('body main fieldset.govuk-fieldset select.govuk-select', '0')
           page.click('body main button.govuk-button')
@@ -174,7 +210,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
         return expect(nodeList).to.have.lengthOf.above(0)
       })
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.select('body main fieldset.govuk-fieldset select.govuk-select', '0')
           page.click('body main button.govuk-button')
@@ -197,11 +233,23 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
     describe('Null - Null (All Of)', () => {
       before(async () => await page.goto('https://localhost:5001/null/null-all-of'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/null/null-all-of')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+
+        await page.type('input[type="text"]', 'null')
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Null (All Of)'))
 
       it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('input[type="text"]', 'null')
           page.click('body main button.govuk-button')
@@ -216,7 +264,31 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
+        })
+      })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/null/null-all-of')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+
+          await page.type('input[type="text"]', 'string')
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/null/null-all-of'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
         })
       })
     })

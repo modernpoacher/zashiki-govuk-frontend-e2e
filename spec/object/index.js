@@ -96,7 +96,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
@@ -123,7 +123,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
@@ -163,7 +163,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
@@ -191,7 +191,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
@@ -219,7 +219,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
@@ -247,7 +247,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
@@ -275,7 +275,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
@@ -315,7 +315,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
@@ -343,7 +343,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
@@ -371,7 +371,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })

@@ -77,12 +77,26 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
     describe('Number - Number', () => {
       before(async () => await page.goto('https://localhost:5001/number/number'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/number/number')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+
+        await page.type('input[type="text"]', '1')
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number'))
 
       it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
+          await page.goto('https://localhost:5001/number/number')
+
           await page.type('input[type="text"]', '1')
           page.click('body main button.govuk-button')
 
@@ -96,7 +110,31 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
+        })
+      })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/number/number')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+
+          await page.type('input[type="text"]', 'string')
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/number/number'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
         })
       })
     })
@@ -112,7 +150,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
         return expect(nodeList).to.have.lengthOf.above(0)
       })
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.select('body main fieldset.govuk-fieldset select.govuk-select', '1')
           page.click('body main button.govuk-button')
@@ -143,7 +181,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
         return expect(nodeList).to.have.lengthOf.above(0)
       })
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.select('body main fieldset.govuk-fieldset select.govuk-select', '1')
           page.click('body main button.govuk-button')
@@ -174,7 +212,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
         return expect(nodeList).to.have.lengthOf.above(0)
       })
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.select('body main fieldset.govuk-fieldset select.govuk-select', '1')
           page.click('body main button.govuk-button')
@@ -197,11 +235,23 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
     describe('Number - Number (All Of)', () => {
       before(async () => await page.goto('https://localhost:5001/number/number-all-of'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/number/number-all-of')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+
+        await page.type('input[type="text"]', '1')
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number (All Of)'))
 
       it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('input[type="text"]', '1')
           page.click('body main button.govuk-button')
@@ -216,7 +266,31 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
         it('Does not have any error messages', async () => {
           const nodeList = await page.$$('.govuk-error-message')
 
-          return expect(nodeList.length).to.equal(0)
+          return expect(nodeList).to.have.lengthOf(0)
+        })
+      })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/number/number-all-of')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+
+          await page.type('input[type="text"]', 'string')
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/number/number-all-of'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
         })
       })
     })
