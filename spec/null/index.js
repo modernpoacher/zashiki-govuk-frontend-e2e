@@ -82,8 +82,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
-
         await page.type('input[type="text"]', 'null')
+
         page.click('body main button.govuk-button')
 
         await page.waitForNavigation()
@@ -118,8 +118,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
-
           await page.type('input[type="text"]', 'string')
+
           page.click('body main button.govuk-button')
 
           await page.waitForNavigation()
@@ -238,8 +238,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
-
         await page.type('input[type="text"]', 'null')
+
         page.click('body main button.govuk-button')
 
         await page.waitForNavigation()
@@ -274,8 +274,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
-
           await page.type('input[type="text"]', 'string')
+
           page.click('body main button.govuk-button')
 
           await page.waitForNavigation()

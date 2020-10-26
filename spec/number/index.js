@@ -82,8 +82,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
-
         await page.type('input[type="text"]', '1')
+
         page.click('body main button.govuk-button')
 
         await page.waitForNavigation()
@@ -91,7 +91,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Number component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
       describe('Input is valid', () => {
         before(async () => {
@@ -120,8 +120,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
-
           await page.type('input[type="text"]', 'string')
+
           page.click('body main button.govuk-button')
 
           await page.waitForNavigation()
@@ -240,8 +240,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
-
         await page.type('input[type="text"]', '1')
+
         page.click('body main button.govuk-button')
 
         await page.waitForNavigation()
@@ -249,7 +249,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number (All Of)'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Number component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
       describe('Input is valid', () => {
         before(async () => {
@@ -276,8 +276,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
-
           await page.type('input[type="text"]', 'string')
+
           page.click('body main button.govuk-button')
 
           await page.waitForNavigation()

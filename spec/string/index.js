@@ -81,7 +81,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
 
       it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.type('input[type="text"]', 'string')
           page.click('body main button.govuk-button')
@@ -112,7 +112,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
         return expect(nodeList).to.have.lengthOf.above(0)
       })
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.click('input[type="radio"][value="1"]')
           page.click('body main button.govuk-button')
@@ -143,7 +143,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
         return expect(nodeList).to.have.lengthOf.above(0)
       })
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.click('input[type="radio"][value="1"]')
           page.click('body main button.govuk-button')
@@ -174,7 +174,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
         return expect(nodeList).to.have.lengthOf.above(0)
       })
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.click('input[type="radio"][value="1"]')
           page.click('body main button.govuk-button')
@@ -201,7 +201,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
 
       it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.type('input[type="text"]', 'string')
           page.click('body main button.govuk-button')

@@ -79,9 +79,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (String)'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a String component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.type('input[type="text"]', 'string')
           page.click('body main button.govuk-button')
@@ -104,11 +104,23 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     describe('Object - Object (Number)', () => {
       before(async () => await page.goto('https://localhost:5001/object/object-number'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/object/object-number')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('input[type="text"]', '1')
+
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Number)'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Number component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('input[type="text"]', '1')
           page.click('body main button.govuk-button')
@@ -126,22 +138,72 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/object/object-number')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('input[type="text"]', 'string')
+
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-number'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
+        })
+      })
     })
 
     describe('Object - Object (Array - Array)', () => {
       before(async () => await page.goto('https://localhost:5001/object/object-array-array'))
 
+      after(async () => {
+        let input
+
+        await page.goto('https://localhost:5001/object/object-array-array')
+
+        input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('.govuk-form-group:nth-of-type(1) input[type="text"]', 'string')
+
+        input = await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('.govuk-form-group:nth-of-type(2) input[type="text"]', '1')
+
+        input = await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('.govuk-form-group:nth-of-type(3) input[type="text"]', 'true')
+
+        input = await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('.govuk-form-group:nth-of-type(4) input[type="text"]', 'null')
+
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Array - Array)'))
 
-      it('Has a String <input />', async () => expect(await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')).not.to.be.null)
+      it('Has a String component', async () => expect(await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')).not.to.be.null)
 
-      it('Has a Number <input />', async () => expect(await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')).not.to.be.null)
+      it('Has a Number component', async () => expect(await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')).not.to.be.null)
 
-      it('Has a Boolean <input />', async () => expect(await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')).not.to.be.null)
+      it('Has a Boolean component', async () => expect(await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')).not.to.be.null)
 
-      it('Has a Null <input />', async () => expect(await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')).not.to.be.null)
+      it('Has a Null component', async () => expect(await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('.govuk-form-group:nth-of-type(1) input[type="text"]', 'string')
 
@@ -166,6 +228,44 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          let input
+
+          await page.goto('https://localhost:5001/object/object-array-array')
+
+          input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('.govuk-form-group:nth-of-type(1) input[type="text"]', 'string')
+
+          input = await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('.govuk-form-group:nth-of-type(2) input[type="text"]', 'string')
+
+          input = await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('.govuk-form-group:nth-of-type(3) input[type="text"]', 'string')
+
+          input = await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('.govuk-form-group:nth-of-type(4) input[type="text"]', 'string')
+
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-array-array'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
+        })
+      })
     })
 
     describe('Object - Object (Array - Object - String)', () => {
@@ -173,9 +273,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Array - Object - String)'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a String component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input', () => {
         before(async () => {
           await page.type('input[type="text"]', 'string')
 
@@ -199,11 +299,23 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     describe('Object - Object (Array - Object - Number)', () => {
       before(async () => await page.goto('https://localhost:5001/object/object-array-object-number'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/object/object-array-object-number')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('input[type="text"]', '1')
+
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Array - Object - Number)'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Number component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('input[type="text"]', '1')
 
@@ -222,16 +334,52 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/object/object-array-object-number')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('input[type="text"]', 'string')
+
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-array-object-number'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
+        })
+      })
     })
 
     describe('Object - Object (Array - Object - Boolean)', () => {
       before(async () => await page.goto('https://localhost:5001/object/object-array-object-boolean'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/object/object-array-object-boolean')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('input[type="text"]', 'true')
+
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Array - Object - Boolean)'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Boolean component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('input[type="text"]', 'true')
 
@@ -250,16 +398,52 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/object/object-array-object-boolean')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('input[type="text"]', 'string')
+
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-array-object-boolean'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
+        })
+      })
     })
 
     describe('Object - Object (Array - Object - Null)', () => {
       before(async () => await page.goto('https://localhost:5001/object/object-array-object-null'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/object/object-array-object-null')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('input[type="text"]', 'null')
+
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Array - Object - Null)'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Null component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('input[type="text"]', 'null')
 
@@ -278,22 +462,72 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/object/object-array-object-null')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('input[type="text"]', 'string')
+
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-array-object-null'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
+        })
+      })
     })
 
     describe('Object - Object (Object)', () => {
       before(async () => await page.goto('https://localhost:5001/object/object-object'))
 
+      after(async () => {
+        let input
+
+        await page.goto('https://localhost:5001/object/object-object')
+
+        input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('.govuk-form-group:nth-of-type(1) input[type="text"]', 'string')
+
+        input = await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('.govuk-form-group:nth-of-type(2) input[type="text"]', '1')
+
+        input = await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('.govuk-form-group:nth-of-type(3) input[type="text"]', 'true')
+
+        input = await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('.govuk-form-group:nth-of-type(4) input[type="text"]', 'null')
+
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Object)'))
 
-      it('Has a String <input />', async () => expect(await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')).not.to.be.null)
+      it('Has a String component', async () => expect(await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')).not.to.be.null)
 
-      it('Has a Number <input />', async () => expect(await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')).not.to.be.null)
+      it('Has a Number component', async () => expect(await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')).not.to.be.null)
 
-      it('Has a Boolean <input />', async () => expect(await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')).not.to.be.null)
+      it('Has a Boolean component', async () => expect(await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')).not.to.be.null)
 
-      it('Has a Null <input />', async () => expect(await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')).not.to.be.null)
+      it('Has a Null component', async () => expect(await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('.govuk-form-group:nth-of-type(1) input[type="text"]', 'string')
 
@@ -318,16 +552,66 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          let input
+
+          await page.goto('https://localhost:5001/object/object-object')
+
+          input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('.govuk-form-group:nth-of-type(1) input[type="text"]', 'string')
+
+          input = await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('.govuk-form-group:nth-of-type(2) input[type="text"]', 'string')
+
+          input = await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('.govuk-form-group:nth-of-type(3) input[type="text"]', 'string')
+
+          input = await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('.govuk-form-group:nth-of-type(4) input[type="text"]', 'string')
+
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-object'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
+        })
+      })
     })
 
     describe('Object - Object (Boolean)', () => {
       before(async () => await page.goto('https://localhost:5001/object/object-boolean'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/object/object-boolean')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('input[type="text"]', 'true')
+
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Boolean)'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Boolean component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('input[type="text"]', 'true')
 
@@ -346,16 +630,52 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/object/object-boolean')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('input[type="text"]', 'string')
+
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-boolean'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
+        })
+      })
     })
 
     describe('Object - Object (Null)', () => {
       before(async () => await page.goto('https://localhost:5001/object/object-null'))
 
+      after(async () => {
+        await page.goto('https://localhost:5001/object/object-null')
+
+        const input = await page.$('input[type="text"]')
+        await input.click({ clickCount: 3 })
+        await page.type('input[type="text"]', 'null')
+
+        page.click('body main button.govuk-button')
+
+        await page.waitForNavigation()
+      })
+
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Null)'))
 
-      it('Has an <input />', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Null component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
-      describe('Submitting input', () => {
+      describe('Input is valid', () => {
         before(async () => {
           await page.type('input[type="text"]', 'null')
 
@@ -372,6 +692,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           const nodeList = await page.$$('.govuk-error-message')
 
           return expect(nodeList).to.have.lengthOf(0)
+        })
+      })
+
+      describe('Input is invalid', () => {
+        before(async () => {
+          await page.goto('https://localhost:5001/object/object-null')
+
+          const input = await page.$('input[type="text"]')
+          await input.click({ clickCount: 3 })
+          await page.type('input[type="text"]', 'string')
+
+          page.click('body main button.govuk-button')
+
+          await page.waitForNavigation()
+        })
+
+        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-null'))
+
+        it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
+
+        it('Has some error messages', async () => {
+          const nodeList = await page.$$('.govuk-error-message')
+
+          return expect(nodeList).to.have.lengthOf.above(0)
         })
       })
     })
