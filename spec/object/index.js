@@ -741,6 +741,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('string')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(1) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', 'change')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(1)', getTextContent)).to.equal('Object (String)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(1) + dl dt', getTextContent)).to.equal('String')
+
+              expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('change')
+            })
+          })
         })
 
         describe('Object - Object (Number)', () => {
@@ -750,6 +774,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
             expect(await page.$eval('body main h2:nth-of-type(2) + dl dt', getTextContent)).to.equal('Number')
 
             expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('1')
+          })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(2) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', '2')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(2)', getTextContent)).to.equal('Object (Number)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dt', getTextContent)).to.equal('Number')
+
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('2')
+            })
           })
         })
 
@@ -793,6 +841,76 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
               'Change null'
             ])
           })
+
+          describe('Change', () => {
+            before(async () => {
+              let input
+
+              page.click('body main h2:nth-of-type(3) + dl dd a')
+
+              await page.waitForNavigation()
+
+              input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('.govuk-form-group:nth-of-type(1) input[type="text"]', 'change')
+
+              input = await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('.govuk-form-group:nth-of-type(2) input[type="text"]', '2')
+
+              input = await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('.govuk-form-group:nth-of-type(3) input[type="text"]', 'false')
+
+              input = await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('.govuk-form-group:nth-of-type(4) input[type="text"]', 'null')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(3)', getTextContent)).to.equal('Object (Array - Array)'))
+
+            it('Has a <dl />', async () => {
+              const titles = await page.evaluate(() => {
+                return Array.from(document.querySelectorAll('body main h2:nth-of-type(3) + dl dt'))
+                  .map(({ textContent }) => textContent.trim())
+              })
+
+              const values = await page.evaluate(() => {
+                return Array.from(document.querySelectorAll('body main h2:nth-of-type(3) + dl dd.govuk-summary-list__value'))
+                  .map(({ textContent }) => textContent.trim())
+              })
+
+              const actions = await page.evaluate(() => {
+                return Array.from(document.querySelectorAll('body main h2:nth-of-type(3) + dl dd.govuk-summary-list__actions'))
+                  .map(({ textContent }) => textContent.trim())
+              })
+
+              expect(titles).to.eql([
+                'String',
+                'Number',
+                'Boolean',
+                'Null'
+              ])
+
+              expect(values).to.eql([
+                'change',
+                '2',
+                'false',
+                'null'
+              ])
+
+              expect(actions).to.eql([
+                'Change string',
+                'Change number',
+                'Change boolean',
+                'Change null'
+              ])
+            })
+          })
         })
 
         describe('Object - Object (Array - Object - String)', () => {
@@ -802,6 +920,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
             expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('String')
 
             expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('string')
+          })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(4) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', 'change')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(4)', getTextContent)).to.equal('Object (Array - Object - String)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('String')
+
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('change')
+            })
           })
         })
 
@@ -813,6 +955,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('1')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(5) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', '2')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(5)', getTextContent)).to.equal('Object (Array - Object - Number)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(5) + dl dt', getTextContent)).to.equal('Number')
+
+              expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('2')
+            })
+          })
         })
 
         describe('Object - Object (Array - Object - Boolean)', () => {
@@ -823,6 +989,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(6) + dl dd', getTextContent)).to.equal('true')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(6) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', 'false')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(6)', getTextContent)).to.equal('Object (Array - Object - Boolean)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(6) + dl dt', getTextContent)).to.equal('Boolean')
+
+              expect(await page.$eval('body main h2:nth-of-type(6) + dl dd', getTextContent)).to.equal('false')
+            })
+          })
         })
 
         describe('Object - Object (Array - Object - Null)', () => {
@@ -832,6 +1022,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
             expect(await page.$eval('body main h2:nth-of-type(7) + dl dt', getTextContent)).to.equal('Null')
 
             expect(await page.$eval('body main h2:nth-of-type(7) + dl dd', getTextContent)).to.equal('null')
+          })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(7) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', 'null')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(7)', getTextContent)).to.equal('Object (Array - Object - Null)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(7) + dl dt', getTextContent)).to.equal('Null')
+
+              expect(await page.$eval('body main h2:nth-of-type(7) + dl dd', getTextContent)).to.equal('null')
+            })
           })
         })
 
@@ -875,6 +1089,76 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
               'Change null'
             ])
           })
+
+          describe('Change', () => {
+            before(async () => {
+              let input
+
+              page.click('body main h2:nth-of-type(8) + dl dd a')
+
+              await page.waitForNavigation()
+
+              input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('.govuk-form-group:nth-of-type(1) input[type="text"]', 'change')
+
+              input = await page.$('.govuk-form-group:nth-of-type(2) input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('.govuk-form-group:nth-of-type(2) input[type="text"]', '2')
+
+              input = await page.$('.govuk-form-group:nth-of-type(3) input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('.govuk-form-group:nth-of-type(3) input[type="text"]', 'false')
+
+              input = await page.$('.govuk-form-group:nth-of-type(4) input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('.govuk-form-group:nth-of-type(4) input[type="text"]', 'null')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(8)', getTextContent)).to.equal('Object (Object)'))
+
+            it('Has a <dl />', async () => {
+              const titles = await page.evaluate(() => {
+                return Array.from(document.querySelectorAll('body main h2:nth-of-type(8) + dl dt'))
+                  .map(({ textContent }) => textContent.trim())
+              })
+
+              const values = await page.evaluate(() => {
+                return Array.from(document.querySelectorAll('body main h2:nth-of-type(8) + dl dd.govuk-summary-list__value'))
+                  .map(({ textContent }) => textContent.trim())
+              })
+
+              const actions = await page.evaluate(() => {
+                return Array.from(document.querySelectorAll('body main h2:nth-of-type(8) + dl dd.govuk-summary-list__actions'))
+                  .map(({ textContent }) => textContent.trim())
+              })
+
+              expect(titles).to.eql([
+                'String',
+                'Number',
+                'Boolean',
+                'Null'
+              ])
+
+              expect(values).to.eql([
+                'change',
+                '2',
+                'false',
+                'null'
+              ])
+
+              expect(actions).to.eql([
+                'Change string',
+                'Change number',
+                'Change boolean',
+                'Change null'
+              ])
+            })
+          })
         })
 
         describe('Object - Object (Boolean)', () => {
@@ -885,6 +1169,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
             expect(await page.$eval('body main h2:nth-of-type(9) + dl dd', getTextContent)).to.equal('true')
           })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(9) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', 'false')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(9)', getTextContent)).to.equal('Object (Boolean)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(9) + dl dt', getTextContent)).to.equal('Boolean')
+
+              expect(await page.$eval('body main h2:nth-of-type(9) + dl dd', getTextContent)).to.equal('false')
+            })
+          })
         })
 
         describe('Object - Object (Null)', () => {
@@ -894,6 +1202,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
             expect(await page.$eval('body main h2:nth-of-type(10) + dl dt', getTextContent)).to.equal('Null')
 
             expect(await page.$eval('body main h2:nth-of-type(10) + dl dd', getTextContent)).to.equal('null')
+          })
+
+          describe('Change', () => {
+            before(async () => {
+              page.click('body main h2:nth-of-type(10) + dl dd a')
+
+              await page.waitForNavigation()
+
+              const input = await page.$('input[type="text"]')
+              await input.click({ clickCount: 3 })
+              await page.type('input[type="text"]', 'null')
+
+              page.click('body main button.govuk-button')
+
+              await page.waitForNavigation()
+            })
+
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(10)', getTextContent)).to.equal('Object (Null)'))
+
+            it('Has a <dl />', async () => {
+              expect(await page.$eval('body main h2:nth-of-type(10) + dl dt', getTextContent)).to.equal('Null')
+
+              expect(await page.$eval('body main h2:nth-of-type(10) + dl dd', getTextContent)).to.equal('null')
+            })
           })
         })
 
