@@ -233,7 +233,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
 
       it('Has a <button />', async () => expect(await page.$eval('body main button.govuk-button', getTextContent)).to.equal('Accept and send'))
 
-      describe('Check Answers', () => {
+      describe('Summary', () => {
         describe('String - String', () => {
           it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(1)', getTextContent)).to.equal('String'))
 
