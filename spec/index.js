@@ -23,17 +23,15 @@ describe('@modernpoacher/zashiki-govuk-frontend', () => {
     if (DEBUG) debug.enable(DEBUG)
   })
 
-  let browser
-  let page
-
-  before(async () => { browser = await puppeteer.launch({ ignoreHTTPSErrors: true }) })
-
-  after(async () => await browser.close())
-
   describe('`Zashiki`', () => {
-    it('is awake', async () => {
-      page = await browser.newPage()
+    let browser
 
+    before(async () => { browser = await puppeteer.launch({ ignoreHTTPSErrors: true }) })
+
+    after(async () => await browser.close())
+
+    it('is awake', async () => {
+      const page = await browser.newPage()
       await page.goto('https://localhost:5001')
       await page.waitForSelector('h1')
 

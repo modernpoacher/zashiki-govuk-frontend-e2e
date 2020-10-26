@@ -10,7 +10,7 @@ const log = debug('zashiki:e2e')
 
 log('`zashiki` is awake')
 
-const getTextContent = (element) => element.textContent.trim()
+const getTextContent = ({ textContent = '' }) => textContent.trim()
 
 describe('@modernpoacher/zashiki-govuk-frontend/array', () => {
   before(() => {
@@ -24,13 +24,14 @@ describe('@modernpoacher/zashiki-govuk-frontend/array', () => {
   })
 
   let browser
-  let page
 
   before(async () => { browser = await puppeteer.launch({ ignoreHTTPSErrors: true }) })
 
   after(async () => await browser.close())
 
   describe('Embark', () => {
+    let page
+
     before(async () => {
       page = await browser.newPage()
 

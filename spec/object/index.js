@@ -24,13 +24,14 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
   })
 
   let browser
-  let page
 
   before(async () => { browser = await puppeteer.launch({ ignoreHTTPSErrors: true }) })
 
   after(async () => await browser.close())
 
   describe('Embark', () => {
+    let page
+
     before(async () => {
       page = await browser.newPage()
 
