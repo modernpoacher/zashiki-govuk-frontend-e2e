@@ -13,6 +13,10 @@ log('`zashiki` is awake')
 const getTextContent = ({ textContent = '' }) => textContent.trim()
 
 describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
+  const EMBARK = 'https://localhost:5001/embark-stage'
+  const DEBARK = 'https://localhost:5001/debark-stage'
+  const CONFIRM = 'https://localhost:5001/confirm-stage'
+
   before(() => {
     const {
       env: {
@@ -35,7 +39,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     before(async () => {
       page = await browser.newPage()
 
-      await page.goto('https://localhost:5001/embark-stage')
+      await page.goto(EMBARK)
       await page.waitForSelector('h1')
     })
 
@@ -62,7 +66,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     before(async () => {
       page = await browser.newPage()
 
-      await page.goto('https://localhost:5001/embark-stage')
+      await page.goto(EMBARK)
 
       await page.evaluate(() => {
         const option = Array.from(document.querySelectorAll('body main fieldset select option'))
@@ -76,7 +80,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (String)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-string'))
+      const ROUTE = 'https://localhost:5001/object/object-string'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (String)'))
 
@@ -90,7 +96,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-string'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -103,10 +109,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (Number)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-number'))
+      const ROUTE = 'https://localhost:5001/object/object-number'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
-        await page.goto('https://localhost:5001/object/object-number')
+        await page.goto(ROUTE)
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -129,7 +137,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-number'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -142,7 +150,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
       describe('Input is invalid', () => {
         before(async () => {
-          await page.goto('https://localhost:5001/object/object-number')
+          await page.goto(ROUTE)
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -153,7 +161,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-number'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -166,12 +174,14 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (Array - Array)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-array-array'))
+      const ROUTE = 'https://localhost:5001/object/object-array-array'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
         let input
 
-        await page.goto('https://localhost:5001/object/object-array-array')
+        await page.goto(ROUTE)
 
         input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -219,7 +229,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-array-array'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -234,7 +244,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         before(async () => {
           let input
 
-          await page.goto('https://localhost:5001/object/object-array-array')
+          await page.goto(ROUTE)
 
           input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -257,7 +267,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-array-array'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -270,7 +280,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (Array - Object - String)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-array-object-string'))
+      const ROUTE = 'https://localhost:5001/object/object-array-object-string'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Object (Array - Object - String)'))
 
@@ -285,7 +297,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-array-object-string'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -298,10 +310,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (Array - Object - Number)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-array-object-number'))
+      const ROUTE = 'https://localhost:5001/object/object-array-object-number'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
-        await page.goto('https://localhost:5001/object/object-array-object-number')
+        await page.goto(ROUTE)
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -325,7 +339,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-array-object-number'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -337,8 +351,10 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
       })
 
       describe('Input is invalid', () => {
+        const ROUTE = 'https://localhost:5001/object/object-array-object-number'
+
         before(async () => {
-          await page.goto('https://localhost:5001/object/object-array-object-number')
+          await page.goto(ROUTE)
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -349,7 +365,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-array-object-number'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -362,10 +378,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (Array - Object - Boolean)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-array-object-boolean'))
+      const ROUTE = 'https://localhost:5001/object/object-array-object-boolean'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
-        await page.goto('https://localhost:5001/object/object-array-object-boolean')
+        await page.goto(ROUTE)
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -389,7 +407,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-array-object-boolean'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -402,7 +420,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
       describe('Input is invalid', () => {
         before(async () => {
-          await page.goto('https://localhost:5001/object/object-array-object-boolean')
+          await page.goto(ROUTE)
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -413,7 +431,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-array-object-boolean'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -426,10 +444,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (Array - Object - Null)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-array-object-null'))
+      const ROUTE = 'https://localhost:5001/object/object-array-object-null'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
-        await page.goto('https://localhost:5001/object/object-array-object-null')
+        await page.goto(ROUTE)
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -453,7 +473,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-array-object-null'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -466,7 +486,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
       describe('Input is invalid', () => {
         before(async () => {
-          await page.goto('https://localhost:5001/object/object-array-object-null')
+          await page.goto(ROUTE)
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -477,7 +497,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-array-object-null'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -490,12 +510,14 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (Object)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-object'))
+      const ROUTE = 'https://localhost:5001/object/object-object'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
         let input
 
-        await page.goto('https://localhost:5001/object/object-object')
+        await page.goto(ROUTE)
 
         input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -543,7 +565,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-object'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -558,7 +580,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
         before(async () => {
           let input
 
-          await page.goto('https://localhost:5001/object/object-object')
+          await page.goto(ROUTE)
 
           input = await page.$('.govuk-form-group:nth-of-type(1) input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -581,7 +603,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-object'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -594,10 +616,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (Boolean)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-boolean'))
+      const ROUTE = 'https://localhost:5001/object/object-boolean'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
-        await page.goto('https://localhost:5001/object/object-boolean')
+        await page.goto(ROUTE)
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -621,7 +645,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-boolean'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -634,7 +658,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
       describe('Input is invalid', () => {
         before(async () => {
-          await page.goto('https://localhost:5001/object/object-boolean')
+          await page.goto(ROUTE)
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -645,7 +669,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-boolean'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -658,10 +682,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
     })
 
     describe('Object - Object (Null)', () => {
-      before(async () => await page.goto('https://localhost:5001/object/object-null'))
+      const ROUTE = 'https://localhost:5001/object/object-null'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
-        await page.goto('https://localhost:5001/object/object-null')
+        await page.goto(ROUTE)
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -685,7 +711,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/object/object-null'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -698,7 +724,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
 
       describe('Input is invalid', () => {
         before(async () => {
-          await page.goto('https://localhost:5001/object/object-null')
+          await page.goto(ROUTE)
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -709,7 +735,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/object/object-null'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -725,7 +751,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
       before(async () => {
         page = await browser.newPage()
 
-        await page.goto('https://localhost:5001/debark-stage')
+        await page.goto(DEBARK)
         await page.waitForSelector('h1')
       })
 
@@ -1237,7 +1263,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
             await page.waitForNavigation()
           })
 
-          it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/debark-stage'))
+          it('Does not return to the same url', async () => expect(page.url()).not.to.equal(DEBARK))
         })
       })
     })
@@ -1246,7 +1272,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
       before(async () => {
         page = await browser.newPage()
 
-        await page.goto('https://localhost:5001/confirm-stage')
+        await page.goto(CONFIRM)
         await page.waitForSelector('h1')
       })
 

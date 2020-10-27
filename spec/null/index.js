@@ -13,6 +13,10 @@ log('`zashiki` is awake')
 const getTextContent = ({ textContent = '' }) => textContent.trim()
 
 describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
+  const EMBARK = 'https://localhost:5001/embark-stage'
+  const DEBARK = 'https://localhost:5001/debark-stage'
+  const CONFIRM = 'https://localhost:5001/confirm-stage'
+
   before(() => {
     const {
       env: {
@@ -35,7 +39,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
     before(async () => {
       page = await browser.newPage()
 
-      await page.goto('https://localhost:5001/embark-stage')
+      await page.goto(EMBARK)
       await page.waitForSelector('h1')
     })
 
@@ -62,7 +66,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
     before(async () => {
       page = await browser.newPage()
 
-      await page.goto('https://localhost:5001/embark-stage')
+      await page.goto(EMBARK)
 
       await page.evaluate(() => {
         const option = Array.from(document.querySelectorAll('body main fieldset select option'))
@@ -76,10 +80,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
     })
 
     describe('Null - Null', () => {
-      before(async () => await page.goto('https://localhost:5001/null/null'))
+      const ROUTE = 'https://localhost:5001/null/null'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
-        await page.goto('https://localhost:5001/null/null')
+        await page.goto(ROUTE)
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -102,7 +108,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/null/null'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -115,7 +121,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
 
       describe('Input is invalid', () => {
         before(async () => {
-          await page.goto('https://localhost:5001/null/null')
+          await page.goto(ROUTE)
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -126,7 +132,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/null/null'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -139,7 +145,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
     })
 
     describe('Null - Null (Enum)', () => {
-      before(async () => await page.goto('https://localhost:5001/null/null-enum'))
+      const ROUTE = 'https://localhost:5001/null/null-enum'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Null (Enum)'))
 
@@ -157,7 +165,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/null/null-enum'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -170,7 +178,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
     })
 
     describe('Null - Null (Any Of)', () => {
-      before(async () => await page.goto('https://localhost:5001/null/null-any-of'))
+      const ROUTE = 'https://localhost:5001/null/null-any-of'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Null (Any Of)'))
 
@@ -188,7 +198,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/null/null-any-of'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -201,7 +211,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
     })
 
     describe('Null - Null (One Of)', () => {
-      before(async () => await page.goto('https://localhost:5001/null/null-one-of'))
+      const ROUTE = 'https://localhost:5001/null/null-one-of'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Null (One Of)'))
 
@@ -219,7 +231,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/null/null-one-of'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -232,10 +244,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
     })
 
     describe('Null - Null (All Of)', () => {
-      before(async () => await page.goto('https://localhost:5001/null/null-all-of'))
+      const ROUTE = 'https://localhost:5001/null/null-all-of'
+
+      before(async () => await page.goto(ROUTE))
 
       after(async () => {
-        await page.goto('https://localhost:5001/null/null-all-of')
+        await page.goto(ROUTE)
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
@@ -258,7 +272,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/null/null-all-of'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -271,7 +285,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
 
       describe('Input is invalid', () => {
         before(async () => {
-          await page.goto('https://localhost:5001/null/null-all-of')
+          await page.goto(ROUTE)
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
@@ -282,7 +296,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
           await page.waitForNavigation()
         })
 
-        it('Returns to the same url', async () => expect(page.url()).to.equal('https://localhost:5001/null/null-all-of'))
+        it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
 
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
@@ -298,7 +312,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
       before(async () => {
         page = await browser.newPage()
 
-        await page.goto('https://localhost:5001/debark-stage')
+        await page.goto(DEBARK)
         await page.waitForSelector('h1')
       })
 
@@ -478,7 +492,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
             await page.waitForNavigation()
           })
 
-          it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/debark-stage'))
+          it('Does not return to the same url', async () => expect(page.url()).not.to.equal(DEBARK))
         })
       })
     })
@@ -487,7 +501,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
       before(async () => {
         page = await browser.newPage()
 
-        await page.goto('https://localhost:5001/confirm-stage')
+        await page.goto(CONFIRM)
         await page.waitForSelector('h1')
       })
 

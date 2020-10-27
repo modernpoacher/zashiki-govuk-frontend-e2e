@@ -13,6 +13,10 @@ log('`zashiki` is awake')
 const getTextContent = ({ textContent = '' }) => textContent.trim()
 
 describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
+  const EMBARK = 'https://localhost:5001/embark-stage'
+  const DEBARK = 'https://localhost:5001/debark-stage'
+  const CONFIRM = 'https://localhost:5001/confirm-stage'
+
   before(() => {
     const {
       env: {
@@ -35,7 +39,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
     before(async () => {
       page = await browser.newPage()
 
-      await page.goto('https://localhost:5001/embark-stage')
+      await page.goto(EMBARK)
       await page.waitForSelector('h1')
     })
 
@@ -62,7 +66,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
     before(async () => {
       page = await browser.newPage()
 
-      await page.goto('https://localhost:5001/embark-stage')
+      await page.goto(EMBARK)
 
       await page.evaluate(() => {
         const option = Array.from(document.querySelectorAll('body main fieldset select option'))
@@ -76,7 +80,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
     })
 
     describe('String - String', () => {
-      before(async () => await page.goto('https://localhost:5001/string/string'))
+      const ROUTE = 'https://localhost:5001/string/string'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('String'))
 
@@ -90,7 +96,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/string/string'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -103,7 +109,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
     })
 
     describe('String - String (Enum)', () => {
-      before(async () => await page.goto('https://localhost:5001/string/string-enum'))
+      const ROUTE = 'https://localhost:5001/string/string-enum'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('String (Enum)'))
 
@@ -121,7 +129,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/string/string-enum'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -134,7 +142,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
     })
 
     describe('String - String (Any Of)', () => {
-      before(async () => await page.goto('https://localhost:5001/string/string-any-of'))
+      const ROUTE = 'https://localhost:5001/string/string-any-of'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('String (Any Of)'))
 
@@ -152,7 +162,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/string/string-any-of'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -165,7 +175,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
     })
 
     describe('String - String (One Of)', () => {
-      before(async () => await page.goto('https://localhost:5001/string/string-one-of'))
+      const ROUTE = 'https://localhost:5001/string/string-one-of'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('String (One Of)'))
 
@@ -183,7 +195,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/string/string-one-of'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -196,7 +208,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
     })
 
     describe('String - String (All Of)', () => {
-      before(async () => await page.goto('https://localhost:5001/string/string-all-of'))
+      const ROUTE = 'https://localhost:5001/string/string-all-of'
+
+      before(async () => await page.goto(ROUTE))
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('String (All Of)'))
 
@@ -210,7 +224,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
           await page.waitForNavigation()
         })
 
-        it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/string/string-all-of'))
+        it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
 
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
@@ -226,7 +240,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
       before(async () => {
         page = await browser.newPage()
 
-        await page.goto('https://localhost:5001/debark-stage')
+        await page.goto(DEBARK)
         await page.waitForSelector('h1')
       })
 
@@ -406,7 +420,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
             await page.waitForNavigation()
           })
 
-          it('Does not return to the same url', async () => expect(page.url()).not.to.equal('https://localhost:5001/debark-stage'))
+          it('Does not return to the same url', async () => expect(page.url()).not.to.equal(DEBARK))
         })
       })
     })
@@ -415,7 +429,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
       before(async () => {
         page = await browser.newPage()
 
-        await page.goto('https://localhost:5001/confirm-stage')
+        await page.goto(CONFIRM)
         await page.waitForSelector('h1')
       })
 
