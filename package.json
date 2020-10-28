@@ -24,7 +24,7 @@
     "cross-env": "^7.0.2",
     "debug": "^4.2.0",
     "mocha": "^8.2.0",
-    "puppeteer": "^5.4.0"
+    "puppeteer": "^5.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
