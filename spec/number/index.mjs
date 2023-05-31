@@ -21,7 +21,7 @@ const CONFIRM = 'https://localhost:5001/confirm-stage'
  *  instead an immediately subsequent call to `page.waitForNavigation()` _is_ resolved
  */
 
-describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
+describe('@modernpoacher/zashiki-govuk-frontend/number', () => {
   before(() => {
     const {
       env: {
@@ -34,7 +34,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
   let browser
 
-  before(async () => { browser = await puppeteer.launch({ ignoreHTTPSErrors: true }) })
+  before(async () => { browser = await puppeteer.launch({ ignoreHTTPSErrors: true, headless: 'new' }) })
 
   after(async () => await browser.close())
 
@@ -64,7 +64,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
     })
   })
 
-  describe('Boolean', () => {
+  describe('Number', () => {
     let page
 
     before(async () => {
@@ -72,15 +72,15 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
       await page.goto(EMBARK, { waitUntil: 'load' })
 
-      await page.screenshot({ path: '.screenshots/embark-boolean-1.png' })
+      await page.screenshot({ path: '.screenshots/embark-number-1.png' })
 
       await page.evaluate(() => {
         const option = Array.from(document.querySelectorAll('body main fieldset select option'))
-          .find(({ text }) => text === 'Boolean')
+          .find(({ text }) => text === 'Number')
         if (option) option.selected = true
       })
 
-      await page.screenshot({ path: '.screenshots/embark-boolean-2.png' })
+      await page.screenshot({ path: '.screenshots/embark-number-2.png' })
 
       await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -88,30 +88,30 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
       await page.waitForNavigation()
 
-      await page.screenshot({ path: '.screenshots/embark-boolean-3.png' })
+      await page.screenshot({ path: '.screenshots/embark-number-3.png' })
     })
 
-    describe('Boolean - Boolean', () => {
-      const ROUTE = 'https://localhost:5001/boolean/boolean'
+    describe('Number - Number', () => {
+      const ROUTE = 'https://localhost:5001/number/number'
 
       before(async () => {
         await page.goto(ROUTE, { waitUntil: 'load' })
 
-        await page.screenshot({ path: '.screenshots/boolean-1.png' })
+        await page.screenshot({ path: '.screenshots/number-1.png' })
       })
 
       after(async () => {
         await page.goto(ROUTE, { waitUntil: 'load' })
 
-        await page.screenshot({ path: '.screenshots/boolean-7.png' })
+        await page.screenshot({ path: '.screenshots/number-7.png' })
 
         await page.evaluate(() => { document.querySelector('input[type="text"]').scrollIntoView() })
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
-        await page.type('input[type="text"]', 'true')
+        await page.type('input[type="text"]', '1')
 
-        await page.screenshot({ path: '.screenshots/boolean-8.png' })
+        await page.screenshot({ path: '.screenshots/number-8.png' })
 
         await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -119,12 +119,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
         await page.waitForNavigation()
 
-        await page.screenshot({ path: '.screenshots/boolean-9.png' })
+        await page.screenshot({ path: '.screenshots/number-9.png' })
       })
 
-      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Boolean'))
+      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number'))
 
-      it('Has a Boolean component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Number component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
       describe('Input is valid', () => {
         before(async () => {
@@ -132,9 +132,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
-          await page.type('input[type="text"]', 'true')
+          await page.type('input[type="text"]', '1')
 
-          await page.screenshot({ path: '.screenshots/boolean-2.png' })
+          await page.screenshot({ path: '.screenshots/number-2.png' })
 
           await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -142,7 +142,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.waitForNavigation()
 
-          await page.screenshot({ path: '.screenshots/boolean-3.png' })
+          await page.screenshot({ path: '.screenshots/number-3.png' })
         })
 
         it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
@@ -150,7 +150,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
@@ -160,7 +160,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
         before(async () => {
           await page.goto(ROUTE, { waitUntil: 'load' })
 
-          await page.screenshot({ path: '.screenshots/boolean-4.png' })
+          await page.screenshot({ path: '.screenshots/number-4.png' })
 
           await page.evaluate(() => { document.querySelector('input[type="text"]').scrollIntoView() })
 
@@ -168,7 +168,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
           await input.click({ clickCount: 3 })
           await page.type('input[type="text"]', 'string')
 
-          await page.screenshot({ path: '.screenshots/boolean-5.png' })
+          await page.screenshot({ path: '.screenshots/number-5.png' })
 
           await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -176,7 +176,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.waitForNavigation()
 
-          await page.screenshot({ path: '.screenshots/boolean-6.png' })
+          await page.screenshot({ path: '.screenshots/number-6.png' })
         })
 
         it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
@@ -184,23 +184,23 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
         it('Has some error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf.above(0)
         })
       })
     })
 
-    describe('Boolean - Boolean (Enum)', () => {
-      const ROUTE = 'https://localhost:5001/boolean/boolean-enum'
+    describe('Number - Number (Enum)', () => {
+      const ROUTE = 'https://localhost:5001/number/number-enum'
 
       before(async () => {
         await page.goto(ROUTE, { waitUntil: 'load' })
 
-        await page.screenshot({ path: '.screenshots/boolean-enum-1.png' })
+        await page.screenshot({ path: '.screenshots/number-enum-1.png' })
       })
 
-      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Boolean (Enum)'))
+      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number (Enum)'))
 
       it('Has a Select component', async () => {
         const nodeList = await page.$$('body main fieldset select')
@@ -214,7 +214,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.select('body main fieldset select', '1')
 
-          await page.screenshot({ path: '.screenshots/boolean-enum-2.png' })
+          await page.screenshot({ path: '.screenshots/number-enum-2.png' })
 
           await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -222,7 +222,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.waitForNavigation()
 
-          await page.screenshot({ path: '.screenshots/boolean-enum-3.png' })
+          await page.screenshot({ path: '.screenshots/number-enum-3.png' })
         })
 
         it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
@@ -230,23 +230,23 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
 
-    describe('Boolean - Boolean (Any Of)', () => {
-      const ROUTE = 'https://localhost:5001/boolean/boolean-any-of'
+    describe('Number - Number (Any Of)', () => {
+      const ROUTE = 'https://localhost:5001/number/number-any-of'
 
       before(async () => {
         await page.goto(ROUTE, { waitUntil: 'load' })
 
-        await page.screenshot({ path: '.screenshots/boolean-any-of-1.png' })
+        await page.screenshot({ path: '.screenshots/number-any-of-1.png' })
       })
 
-      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Boolean (Any Of)'))
+      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number (Any Of)'))
 
       it('Has a Select component', async () => {
         const nodeList = await page.$$('body main fieldset select')
@@ -260,7 +260,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.select('body main fieldset select', '1')
 
-          await page.screenshot({ path: '.screenshots/boolean-any-of-2.png' })
+          await page.screenshot({ path: '.screenshots/number-any-of-2.png' })
 
           await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -268,7 +268,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.waitForNavigation()
 
-          await page.screenshot({ path: '.screenshots/boolean-any-of-3.png' })
+          await page.screenshot({ path: '.screenshots/number-any-of-3.png' })
         })
 
         it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
@@ -276,23 +276,23 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
 
-    describe('Boolean - Boolean (One Of)', () => {
-      const ROUTE = 'https://localhost:5001/boolean/boolean-one-of'
+    describe('Number - Number (One Of)', () => {
+      const ROUTE = 'https://localhost:5001/number/number-one-of'
 
       before(async () => {
         await page.goto(ROUTE, { waitUntil: 'load' })
 
-        await page.screenshot({ path: '.screenshots/boolean-one-of-1.png' })
+        await page.screenshot({ path: '.screenshots/number-one-of-1.png' })
       })
 
-      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Boolean (One Of)'))
+      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number (One Of)'))
 
       it('Has a Select component', async () => {
         const nodeList = await page.$$('body main fieldset select')
@@ -306,7 +306,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.select('body main fieldset select', '1')
 
-          await page.screenshot({ path: '.screenshots/boolean-one-of-2.png' })
+          await page.screenshot({ path: '.screenshots/number-one-of-2.png' })
 
           await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -314,7 +314,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.waitForNavigation()
 
-          await page.screenshot({ path: '.screenshots/boolean-one-of-3.png' })
+          await page.screenshot({ path: '.screenshots/number-one-of-3.png' })
         })
 
         it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
@@ -322,34 +322,34 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
       })
     })
 
-    describe('Boolean - Boolean (All Of)', () => {
-      const ROUTE = 'https://localhost:5001/boolean/boolean-all-of'
+    describe('Number - Number (All Of)', () => {
+      const ROUTE = 'https://localhost:5001/number/number-all-of'
 
       before(async () => {
         await page.goto(ROUTE, { waitUntil: 'load' })
 
-        await page.screenshot({ path: '.screenshots/boolean-all-of-1.png' })
+        await page.screenshot({ path: '.screenshots/number-all-of-1.png' })
       })
 
       after(async () => {
         await page.goto(ROUTE, { waitUntil: 'load' })
 
-        await page.screenshot({ path: '.screenshots/boolean-all-of-7.png' })
+        await page.screenshot({ path: '.screenshots/number-all-of-7.png' })
 
         await page.evaluate(() => { document.querySelector('input[type="text"]').scrollIntoView() })
 
         const input = await page.$('input[type="text"]')
         await input.click({ clickCount: 3 })
-        await page.type('input[type="text"]', 'true')
+        await page.type('input[type="text"]', '1')
 
-        await page.screenshot({ path: '.screenshots/boolean-all-of-8.png' })
+        await page.screenshot({ path: '.screenshots/number-all-of-8.png' })
 
         await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -357,12 +357,12 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
         await page.waitForNavigation()
 
-        await page.screenshot({ path: '.screenshots/boolean-all-of-9.png' })
+        await page.screenshot({ path: '.screenshots/number-all-of-9.png' })
       })
 
-      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Boolean (All Of)'))
+      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number (All Of)'))
 
-      it('Has a Boolean component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
+      it('Has a Number component', async () => expect(await page.$('input[type="text"]')).not.to.be.null)
 
       describe('Input is valid', () => {
         before(async () => {
@@ -370,9 +370,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           const input = await page.$('input[type="text"]')
           await input.click({ clickCount: 3 })
-          await page.type('input[type="text"]', 'true')
+          await page.type('input[type="text"]', '1')
 
-          await page.screenshot({ path: '.screenshots/boolean-all-of-2.png' })
+          await page.screenshot({ path: '.screenshots/number-all-of-2.png' })
 
           await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -380,7 +380,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.waitForNavigation()
 
-          await page.screenshot({ path: '.screenshots/boolean-all-of-3.png' })
+          await page.screenshot({ path: '.screenshots/number-all-of-3.png' })
         })
 
         it('Does not return to the same url', async () => expect(page.url()).not.to.equal(ROUTE))
@@ -388,7 +388,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
@@ -398,7 +398,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
         before(async () => {
           await page.goto(ROUTE, { waitUntil: 'load' })
 
-          await page.screenshot({ path: '.screenshots/boolean-all-of-4.png' })
+          await page.screenshot({ path: '.screenshots/number-all-of-4.png' })
 
           await page.evaluate(() => { document.querySelector('input[type="text"]').scrollIntoView() })
 
@@ -406,7 +406,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
           await input.click({ clickCount: 3 })
           await page.type('input[type="text"]', 'string')
 
-          await page.screenshot({ path: '.screenshots/boolean-all-of-5.png' })
+          await page.screenshot({ path: '.screenshots/number-all-of-5.png' })
 
           await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -414,7 +414,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
           await page.waitForNavigation()
 
-          await page.screenshot({ path: '.screenshots/boolean-all-of-6.png' })
+          await page.screenshot({ path: '.screenshots/number-all-of-6.png' })
         })
 
         it('Returns to the same url', async () => expect(page.url()).to.equal(ROUTE))
@@ -422,7 +422,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
         it('Has an error summary', async () => expect(await page.$('.govuk-error-summary')).not.to.be.null)
 
         it('Has some error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf.above(0)
         })
@@ -435,21 +435,21 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
         await page.goto(DEBARK, { waitUntil: 'load' })
 
-        await page.screenshot({ path: '.screenshots/debark-boolean.png' })
+        await page.screenshot({ path: '.screenshots/debark-number.png' })
       })
 
-      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Boolean'))
+      it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Number'))
 
       it('Has a <button />', async () => expect(await page.$eval('body main button.govuk-button', getTextContent)).to.equal('Accept and send'))
 
       describe('Summary', () => {
-        describe('Boolean - Boolean', () => {
-          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(1)', getTextContent)).to.equal('Boolean'))
+        describe('Number - Number', () => {
+          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(1)', getTextContent)).to.equal('Number'))
 
           it('Has a <dl />', async () => {
-            expect(await page.$eval('body main h2:nth-of-type(1) + dl dt', getTextContent)).to.equal('Boolean')
+            expect(await page.$eval('body main h2:nth-of-type(1) + dl dt', getTextContent)).to.equal('Number')
 
-            expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('true')
+            expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('1')
           })
 
           describe('Change', () => {
@@ -460,15 +460,15 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-change-1.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-change-1.png' })
 
               await page.evaluate(() => { document.querySelector('input[type="text"]').scrollIntoView() })
 
               const input = await page.$('input[type="text"]')
               await input.click({ clickCount: 3 })
-              await page.type('input[type="text"]', 'false')
+              await page.type('input[type="text"]', '2')
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-change-2.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-change-2.png' })
 
               await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -476,26 +476,26 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-change-3.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-change-3.png' })
             })
 
-            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(1)', getTextContent)).to.equal('Boolean'))
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(1)', getTextContent)).to.equal('Number'))
 
             it('Has a <dl />', async () => {
-              expect(await page.$eval('body main h2:nth-of-type(1) + dl dt', getTextContent)).to.equal('Boolean')
+              expect(await page.$eval('body main h2:nth-of-type(1) + dl dt', getTextContent)).to.equal('Number')
 
-              expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('false')
+              expect(await page.$eval('body main h2:nth-of-type(1) + dl dd', getTextContent)).to.equal('2')
             })
           })
         })
 
-        describe('Boolean - Boolean (Enum)', () => {
-          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(2)', getTextContent)).to.equal('Boolean (Enum)'))
+        describe('Number - Number (Enum)', () => {
+          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(2)', getTextContent)).to.equal('Number (Enum)'))
 
           it('Has a <dl />', async () => {
-            expect(await page.$eval('body main h2:nth-of-type(2) + dl dt', getTextContent)).to.equal('Boolean (Enum)')
+            expect(await page.$eval('body main h2:nth-of-type(2) + dl dt', getTextContent)).to.equal('Number (Enum)')
 
-            expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('false')
+            expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('2')
           })
 
           describe('Change', () => {
@@ -506,13 +506,13 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-enum-change-1.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-enum-change-1.png' })
 
               await page.evaluate(() => { document.querySelector('body main fieldset select').scrollIntoView() })
 
-              await page.select('body main fieldset select', '0')
+              await page.select('body main fieldset select', '2')
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-enum-change-2.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-enum-change-2.png' })
 
               await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -520,26 +520,26 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-enum-change-3.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-enum-change-3.png' })
             })
 
-            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(2)', getTextContent)).to.equal('Boolean (Enum)'))
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(2)', getTextContent)).to.equal('Number (Enum)'))
 
             it('Has a <dl />', async () => {
-              expect(await page.$eval('body main h2:nth-of-type(2) + dl dt', getTextContent)).to.equal('Boolean (Enum)')
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dt', getTextContent)).to.equal('Number (Enum)')
 
-              expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('true')
+              expect(await page.$eval('body main h2:nth-of-type(2) + dl dd', getTextContent)).to.equal('3')
             })
           })
         })
 
-        describe('Boolean - Boolean (Any Of)', () => {
-          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(3)', getTextContent)).to.equal('Boolean (Any Of)'))
+        describe('Number - Number (Any Of)', () => {
+          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(3)', getTextContent)).to.equal('Number (Any Of)'))
 
           it('Has a <dl />', async () => {
-            expect(await page.$eval('body main h2:nth-of-type(3) + dl dt', getTextContent)).to.equal('Boolean (Any Of)')
+            expect(await page.$eval('body main h2:nth-of-type(3) + dl dt', getTextContent)).to.equal('Number (Any Of)')
 
-            expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('False')
+            expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('Two')
           })
 
           describe('Change', () => {
@@ -550,13 +550,13 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-any-of-change-1.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-any-of-change-1.png' })
 
               await page.evaluate(() => { document.querySelector('body main fieldset select').scrollIntoView() })
 
-              await page.select('body main fieldset select', '0')
+              await page.select('body main fieldset select', '2')
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-any-of-change-2.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-any-of-change-2.png' })
 
               await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -564,26 +564,26 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-any-of-change-3.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-any-of-change-3.png' })
             })
 
-            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(3)', getTextContent)).to.equal('Boolean (Any Of)'))
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(3)', getTextContent)).to.equal('Number (Any Of)'))
 
             it('Has a <dl />', async () => {
-              expect(await page.$eval('body main h2:nth-of-type(3) + dl dt', getTextContent)).to.equal('Boolean (Any Of)')
+              expect(await page.$eval('body main h2:nth-of-type(3) + dl dt', getTextContent)).to.equal('Number (Any Of)')
 
-              expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('True')
+              expect(await page.$eval('body main h2:nth-of-type(3) + dl dd', getTextContent)).to.equal('Three')
             })
           })
         })
 
-        describe('Boolean - Boolean (One Of)', () => {
-          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(4)', getTextContent)).to.equal('Boolean (One Of)'))
+        describe('Number - Number (One Of)', () => {
+          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(4)', getTextContent)).to.equal('Number (One Of)'))
 
           it('Has a <dl />', async () => {
-            expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('Boolean (One Of)')
+            expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('Number (One Of)')
 
-            expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('False')
+            expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('Two')
           })
 
           describe('Change', () => {
@@ -594,13 +594,13 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-one-of-change-1.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-one-of-change-1.png' })
 
               await page.evaluate(() => { document.querySelector('body main fieldset select').scrollIntoView() })
 
-              await page.select('body main fieldset select', '0')
+              await page.select('body main fieldset select', '2')
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-one-of-change-2.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-one-of-change-2.png' })
 
               await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -608,26 +608,26 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-one-of-change-3.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-one-of-change-3.png' })
             })
 
-            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(4)', getTextContent)).to.equal('Boolean (One Of)'))
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(4)', getTextContent)).to.equal('Number (One Of)'))
 
             it('Has a <dl />', async () => {
-              expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('Boolean (One Of)')
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dt', getTextContent)).to.equal('Number (One Of)')
 
-              expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('True')
+              expect(await page.$eval('body main h2:nth-of-type(4) + dl dd', getTextContent)).to.equal('Three')
             })
           })
         })
 
-        describe('Boolean - Boolean (All Of)', () => {
-          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(5)', getTextContent)).to.equal('Boolean (All Of)'))
+        describe('Number - Number (All Of)', () => {
+          it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(5)', getTextContent)).to.equal('Number (All Of)'))
 
           it('Has a <dl />', async () => { // TODO - "(All Of)"?
-            expect(await page.$eval('body main h2:nth-of-type(5) + dl dt', getTextContent)).to.equal('Boolean') // (All Of)')
+            expect(await page.$eval('body main h2:nth-of-type(5) + dl dt', getTextContent)).to.equal('Number') // (All Of)')
 
-            expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('true')
+            expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('1')
           })
 
           describe('Change', () => {
@@ -638,15 +638,15 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-all-of-change-1.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-all-of-change-1.png' })
 
               await page.evaluate(() => { document.querySelector('input[type="text"]').scrollIntoView() })
 
               const input = await page.$('input[type="text"]')
               await input.click({ clickCount: 3 })
-              await page.type('input[type="text"]', 'false')
+              await page.type('input[type="text"]', '2')
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-all-of-change-2.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-all-of-change-2.png' })
 
               await page.evaluate(() => { document.querySelector('body main button.govuk-button').scrollIntoView() })
 
@@ -654,15 +654,15 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
               await page.waitForNavigation()
 
-              await page.screenshot({ path: '.screenshots/summary-boolean-all-of-change-3.png' })
+              await page.screenshot({ path: '.screenshots/summary-number-all-of-change-3.png' })
             })
 
-            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(5)', getTextContent)).to.equal('Boolean (All Of)'))
+            it('Has an <h2 />', async () => expect(await page.$eval('body main h2:nth-of-type(5)', getTextContent)).to.equal('Number (All Of)'))
 
             it('Has a <dl />', async () => {
-              expect(await page.$eval('body main h2:nth-of-type(5) + dl dt', getTextContent)).to.equal('Boolean')
+              expect(await page.$eval('body main h2:nth-of-type(5) + dl dt', getTextContent)).to.equal('Number')
 
-              expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('false')
+              expect(await page.$eval('body main h2:nth-of-type(5) + dl dd', getTextContent)).to.equal('2')
             })
           })
         })
@@ -675,7 +675,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
             await page.waitForNavigation()
 
-            await page.screenshot({ path: '.screenshots/summary-boolean-confirm.png' })
+            await page.screenshot({ path: '.screenshots/summary-number-confirm.png' })
           })
 
           it('Does not return to the same url', async () => expect(page.url()).not.to.equal(DEBARK))
@@ -689,7 +689,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
 
         await page.goto(CONFIRM, { waitUntil: 'load' })
 
-        await page.screenshot({ path: '.screenshots/confirm-boolean.png' })
+        await page.screenshot({ path: '.screenshots/confirm-number.png' })
       })
 
       it('Has an <h1 />', async () => expect(await page.$eval('h1', getTextContent)).to.equal('Confirmation'))

@@ -34,7 +34,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
 
   let browser
 
-  before(async () => { browser = await puppeteer.launch({ ignoreHTTPSErrors: true }) })
+  before(async () => { browser = await puppeteer.launch({ ignoreHTTPSErrors: true, headless: 'new' }) })
 
   after(async () => await browser.close())
 
@@ -128,7 +128,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
@@ -174,7 +174,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
@@ -220,7 +220,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
@@ -266,7 +266,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
@@ -310,7 +310,7 @@ describe('@modernpoacher/zashiki-govuk-frontend/string', () => {
         it('Does not have an error summary', async () => expect(await page.$('.govuk-error-summary')).to.be.null)
 
         it('Does not have any error messages', async () => {
-          const nodeList = await page.$$('.govuk-error-message')
+          const nodeList = await page.$$('.govuk-error-summary__list li')
 
           return expect(nodeList).to.have.lengthOf(0)
         })
