@@ -1,7 +1,7 @@
 {
   "name": "@modernpoacher/zashiki-govuk-frontend-e2e",
   "version": "1.1.0",
-  "description": "E2E: UI Application Server for Zashiki",
+  "description": "Zashiki E2E",
   "private": true,
   "main": "./index.mjs",
   "type": "module",
