@@ -26,7 +26,7 @@ describe('@modernpoacher/zashiki-govuk-frontend', () => {
   describe('`Zashiki`', () => {
     let browser
 
-    before(async () => { browser = await puppeteer.launch({ ignoreHTTPSErrors: true, headless: 'new' }) })
+    before(async () => { browser = await puppeteer.launch({ acceptInsecureCerts: true, headless: 'new' }) })
 
     after(async () => await browser.close())
 
