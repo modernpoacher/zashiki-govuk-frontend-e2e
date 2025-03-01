@@ -6,6 +6,8 @@ import {
   expect
 } from 'chai'
 
+import './debug.mjs'
+
 const log = debug('zashiki/e2e')
 
 log('`zashiki` is awake')
@@ -13,20 +15,13 @@ log('`zashiki` is awake')
 const getTextContent = ({ textContent = '' }) => textContent.trim()
 
 describe('@modernpoacher/zashiki-govuk-frontend', () => {
-  before(() => {
-    const {
-      env: {
-        DEBUG
-      }
-    } = process
-
-    if (DEBUG) debug.enable(DEBUG)
-  })
-
   describe('`Zashiki`', () => {
+    /**
+   *  @type {puppeteer.Browser}
+   */
     let browser
 
-    before(async () => { browser = await puppeteer.launch({ acceptInsecureCerts: true, headless: 'new' }) })
+    before(async () => { browser = await puppeteer.launch({ acceptInsecureCerts: true, headless: true }) })
 
     after(async () => await browser.close())
 

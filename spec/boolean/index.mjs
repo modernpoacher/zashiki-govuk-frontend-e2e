@@ -22,23 +22,19 @@ const CONFIRM = 'https://localhost:5001/confirm-stage'
  */
 
 describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
-  before(() => {
-    const {
-      env: {
-        DEBUG
-      }
-    } = process
-
-    if (DEBUG) debug.enable(DEBUG)
-  })
-
+  /**
+   *  @type {puppeteer.Browser}
+   */
   let browser
 
-  before(async () => { browser = await puppeteer.launch({ acceptInsecureCerts: true, headless: 'new' }) })
+  before(async () => { browser = await puppeteer.launch({ acceptInsecureCerts: true, headless: true }) })
 
   after(async () => await browser.close())
 
   describe('Embark', () => {
+    /**
+     *  @type {puppeteer.Page}
+     */
     let page
 
     before(async () => {
@@ -65,6 +61,9 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
   })
 
   describe('Boolean', () => {
+    /**
+     *  @type {puppeteer.Page}
+     */
     let page
 
     before(async () => {
