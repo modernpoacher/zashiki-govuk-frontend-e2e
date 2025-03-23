@@ -74,8 +74,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/object', () => {
       await page.screenshot({ path: '.screenshots/embark-object-1.png' })
 
       await page.evaluate(() => {
-        const option = Array.from(document.querySelectorAll('body main fieldset select option'))
-          .find(({ text }) => text === 'Object')
+        const option = Array.from(document.querySelectorAll('body main fieldset select option')) // @ts-expect-error
+          .find(({ text }) => text === 'Object') // @ts-expect-error
         if (option) option.selected = true
       })
 

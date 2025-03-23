@@ -74,8 +74,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/boolean', () => {
       await page.screenshot({ path: '.screenshots/embark-boolean-1.png' })
 
       await page.evaluate(() => {
-        const option = Array.from(document.querySelectorAll('body main fieldset select option'))
-          .find(({ text }) => text === 'Boolean')
+        const option = Array.from(document.querySelectorAll('body main fieldset select option')) // @ts-expect-error
+          .find(({ text }) => text === 'Boolean') // @ts-expect-error
         if (option) option.selected = true
       })
 

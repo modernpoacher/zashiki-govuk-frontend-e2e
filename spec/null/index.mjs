@@ -74,8 +74,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/null', () => {
       await page.screenshot({ path: '.screenshots/embark-null-1.png' })
 
       await page.evaluate(() => {
-        const option = Array.from(document.querySelectorAll('body main fieldset select option'))
-          .find(({ text }) => text === 'Null')
+        const option = Array.from(document.querySelectorAll('body main fieldset select option')) // @ts-expect-error
+          .find(({ text }) => text === 'Null') // @ts-expect-error
         if (option) option.selected = true
       })
 

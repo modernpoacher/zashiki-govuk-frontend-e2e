@@ -74,8 +74,8 @@ describe('@modernpoacher/zashiki-govuk-frontend/array', () => {
       await page.screenshot({ path: '.screenshots/embark-array-1.png' })
 
       await page.evaluate(() => {
-        const option = Array.from(document.querySelectorAll('body main fieldset select option'))
-          .find(({ text }) => text === 'Array')
+        const option = Array.from(document.querySelectorAll('body main fieldset select option')) // @ts-expect-error
+          .find(({ text }) => text === 'Array') // @ts-expect-error
         if (option) option.selected = true
       })
 
